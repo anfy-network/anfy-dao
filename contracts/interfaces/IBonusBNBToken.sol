@@ -5,9 +5,9 @@ pragma solidity 0.7.5;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 
 /**
- * @dev Interface of the RewardEthToken contract.
+ * @dev Interface of the RewardBNBToken contract.
  */
-interface IRewardEthToken is IERC20Upgradeable {
+interface IRewardBNBToken is IERC20Upgradeable {
     /**
     * @dev Structure for storing information about user reward checkpoint.
     * @param rewardPerToken - user reward per token.
@@ -31,9 +31,9 @@ interface IRewardEthToken is IERC20Upgradeable {
     event ProtocolFeeUpdated(uint256 protocolFee);
 
     /**
-    * @dev Event for tracking whether rewards distribution through merkle distributor is enabled/disabled.
+    * @dev Event for tracking whBNBer rewards distribution through merkle distributor is enabled/disabled.
     * @param account - address of the account.
-    * @param isDisabled - whether rewards distribution is disabled.
+    * @param isDisabled - whBNBer rewards distribution is disabled.
     */
     event RewardsToggled(address indexed account, bool isDisabled);
 
@@ -54,7 +54,7 @@ interface IRewardEthToken is IERC20Upgradeable {
     );
 
     /**
-    * @dev Function for upgrading the RewardEthToken contract. The `initialize` function must be defined
+    * @dev Function for upgrading the RewardBNBToken contract. The `initialize` function must be defined
     * if deploying contract for the first time that will initialize the state variables above.
     * @param _oracles - address of the Oracles contract.
     */
@@ -103,10 +103,10 @@ interface IRewardEthToken is IERC20Upgradeable {
     function rewardPerToken() external view returns (uint128);
 
     /**
-    * @dev Function for setting whether rewards are disabled for the account.
-    * Can only be called by the `StakedEthToken` contract.
+    * @dev Function for setting whBNBer rewards are disabled for the account.
+    * Can only be called by the `StakedBNBToken` contract.
     * @param account - address of the account to disable rewards for.
-    * @param isDisabled - whether the rewards will be disabled.
+    * @param isDisabled - whBNBer the rewards will be disabled.
     */
     function setRewardsDisabled(address account, bool isDisabled) external;
 
@@ -117,7 +117,7 @@ interface IRewardEthToken is IERC20Upgradeable {
     function checkpoints(address account) external view returns (uint128, uint128);
 
     /**
-    * @dev Function for checking whether account's reward will be distributed through the merkle distributor.
+    * @dev Function for checking whBNBer account's reward will be distributed through the merkle distributor.
     * @param account - address of the account.
     */
     function rewardsDisabled(address account) external view returns (bool);
@@ -143,7 +143,7 @@ interface IRewardEthToken is IERC20Upgradeable {
     function updateTotalRewards(uint256 newTotalRewards) external;
 
     /**
-    * @dev Function for claiming rETH2 from the merkle distribution.
+    * @dev Function for claiming rBNB2 from the merkle distribution.
     * Can only be called by MerkleDistributor contract.
     * @param account - address of the account the tokens will be assigned to.
     * @param amount - amount of tokens to assign to the account.

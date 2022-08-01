@@ -5,9 +5,9 @@ pragma solidity 0.7.5;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 
 /**
- * @dev Interface of the StakedEthToken contract.
+ * @dev Interface of the StakedBNBToken contract.
  */
-interface IStakedEthToken is IERC20Upgradeable {
+interface IStakedBNBToken is IERC20Upgradeable {
     /**
     * @dev Function for retrieving the total deposits amount.
     */
@@ -21,7 +21,7 @@ interface IStakedEthToken is IERC20Upgradeable {
     /**
     * @dev Function for toggling rewards for the account.
     * @param account - address of the account.
-    * @param isDisabled - whether to disable account's rewards distribution.
+    * @param isDisabled - whBNBer to disable account's rewards distribution.
     */
     function toggleRewards(address account, bool isDisabled) external;
 
