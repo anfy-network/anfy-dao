@@ -35,6 +35,7 @@
   resolved "https://registry.yarnpkg.com/@codechecks/client/-/client-0.1.12.tgz#519f11be8fcaa581c6ee8d5e8457e35bbbe5d9b1"
   integrity sha512-2GHHvhO3kaOyxFXxOaiznlY8ARmz33/p+WQdhc2y6wzWw5eOl2wSwg1eZxx3LsWlAnB963Y4bd1YjZcGIhKRzA==
   dependencies:
+  
     bluebird "^3.5.3"
     chalk "^2.4.2"
     commander "^2.19.0"

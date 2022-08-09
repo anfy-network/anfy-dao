@@ -23,6 +23,7 @@
     "upgrade-contracts": "yarn compile --optimizer && npx hardhat run --no-compile scripts/upgrade.js",
     "verify": "npx hardhat verify --optimizer"
   },
+  
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
