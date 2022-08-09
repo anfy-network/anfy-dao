@@ -1,4 +1,4 @@
-const { contracts } = require('./settings');
+const { contracts } = require('./fixtures');
 
 async function deployContracts() {
   return contracts;
