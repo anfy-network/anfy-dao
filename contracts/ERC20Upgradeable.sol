@@ -31,3 +31,48 @@ import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {IERC20-approve}.
  */
+
+abstract contract ERC20Upgradeable is Initializable, IERC20Upgradeable {
+    using SafeMathUpgradeable for uint256;
+
+    mapping (address => mapping (address => uint256)) private _allowances;
+
+    string private _name;
+    string private _symbol;
+    uint8 private _decimals;
+
+    /**
+     * @dev Sets the values for {name} and {symbol}, initializes {decimals} with
+     * a default value of 18.
+     *
+     * To select a different value for {decimals}, use {_setupDecimals}.
+     *
+     * All three of these values are immutable: they can only be set once during
+     * construction.
+     */
+    // solhint-disable-next-line func-name-mixedcase
+    function __ERC20_init(string memory name_, string memory symbol_) internal initializer {
+        __ERC20_init_unchained(name_, symbol_);
+    }
+
+    // solhint-disable-next-line func-name-mixedcase
+    function __ERC20_init_unchained(string memory name_, string memory symbol_) internal initializer {
+        _name = name_;
+        _symbol = symbol_;
+        _decimals = 18;
+    }
+
+    /**
+     * @dev Returns the name of the token.
+     */
+    function name() public view virtual returns (string memory) {
+        return _name;
+    }
+
+    /**
+     * @dev Returns the symbol of the token, usually a shorter version of the
+     * name.
+     */
+    function symbol() public view virtual returns (string memory) {
+        return _symbol;
+    }
