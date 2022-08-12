@@ -82,3 +82,11 @@ contract Oracles is IOracles, OwnablePausableUpgradeable {
         grantRole(ORACLE_ROLE, account);
         emit OracleAdded(account);
     }
+
+    /**
+     * @dev See {IOracles-removeOracle}.
+     */
+    function removeOracle(address account) external override {
+        revokeRole(ORACLE_ROLE, account);
+        emit OracleRemoved(account);
+    }
