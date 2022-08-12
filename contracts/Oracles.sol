@@ -90,3 +90,20 @@ contract Oracles is IOracles, OwnablePausableUpgradeable {
         revokeRole(ORACLE_ROLE, account);
         emit OracleRemoved(account);
     }
+
+    /**
+     * @dev See {IOracles-isMerkleRootVoting}.
+     */
+    function isMerkleRootVoting() public override view returns (bool) {
+        uint256 lastRewardBlockNumber = rewardEthToken.lastUpdateBlockNumber();
+        return merkleDistributor.lastUpdateBlockNumber() < lastRewardBlockNumber && lastRewardBlockNumber != block.number;
+    }
+
+    /**
+    * @dev Function for checking whether number of signatures is enough to update the value.
+    * @param signaturesCount - number of signatures.
+    */
+    function isEnoughSignatures(uint256 signaturesCount) internal view returns (bool) {
+        uint256 totalOracles = getRoleMemberCount(ORACLE_ROLE);
+        return totalOracles >= signaturesCount && signaturesCount.mul(3) > totalOracles.mul(2);
+    }
