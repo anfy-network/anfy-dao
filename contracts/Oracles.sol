@@ -66,3 +66,10 @@ contract Oracles is IOracles, OwnablePausableUpgradeable {
     function currentValidatorsNonce() external override view returns (uint256) {
         return validatorsNonce.current();
     }
+
+    /**
+     * @dev See {IOracles-isOracle}.
+     */
+    function isOracle(address account) external override view returns (bool) {
+        return hasRole(ORACLE_ROLE, account);
+    }
