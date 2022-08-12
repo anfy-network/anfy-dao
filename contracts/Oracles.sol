@@ -107,3 +107,47 @@ contract Oracles is IOracles, OwnablePausableUpgradeable {
         uint256 totalOracles = getRoleMemberCount(ORACLE_ROLE);
         return totalOracles >= signaturesCount && signaturesCount.mul(3) > totalOracles.mul(2);
     }
+
+    /**
+     * @dev See {IOracles-submitRewards}.
+     */
+    function submitRewards(
+        uint256 totalRewards,
+        uint256 activatedValidators,
+        bytes[] calldata signatures
+    )
+        external override onlyOracle whenNotPaused
+    {
+        require(isEnoughSignatures(signatures.length), "Oracles: invalid number of signatures");
+
+        // calculate candidate ID hash
+        uint256 nonce = rewardsNonce.current();
+        bytes32 candidateId = ECDSAUpgradeable.toEthSignedMessageHash(
+            keccak256(abi.encode(nonce, activatedValidators, totalRewards))
+        );
+
+        // check signatures and calculate number of submitted oracle votes
+        address[] memory signedOracles = new address[](signatures.length);
+        for (uint256 i = 0; i < signatures.length; i++) {
+            bytes memory signature = signatures[i];
+            address signer = ECDSAUpgradeable.recover(candidateId, signature);
+            require(hasRole(ORACLE_ROLE, signer), "Oracles: invalid signer");
+
+            for (uint256 j = 0; j < i; j++) {
+                require(signedOracles[j] != signer, "Oracles: repeated signature");
+            }
+            signedOracles[i] = signer;
+            emit RewardsVoteSubmitted(msg.sender, signer, nonce, totalRewards, activatedValidators);
+        }
+
+        // increment nonce for future signatures
+        rewardsNonce.increment();
+
+        // update total rewards
+        rewardEthToken.updateTotalRewards(totalRewards);
+
+        // update activated validators
+        if (activatedValidators != pool.activatedValidators()) {
+            pool.setActivatedValidators(activatedValidators);
+        }
+    }
