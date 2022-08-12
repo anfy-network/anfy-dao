@@ -52,3 +52,12 @@ contract Oracles is IOracles, OwnablePausableUpgradeable {
         require(hasRole(ORACLE_ROLE, msg.sender), "Oracles: access denied");
         _;
     }
+
+    /**
+     * @dev See {IOracles-currentRewardsNonce}.
+     */
+    function currentRewardsNonce() external override view returns (uint256) {
+        return rewardsNonce.current();
+    }
+
+    
