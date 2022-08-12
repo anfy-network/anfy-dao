@@ -60,4 +60,9 @@ contract Oracles is IOracles, OwnablePausableUpgradeable {
         return rewardsNonce.current();
     }
 
-    
+    /**
+     * @dev See {IOracles-currentValidatorsNonce}.
+     */
+    function currentValidatorsNonce() external override view returns (uint256) {
+        return validatorsNonce.current();
+    }
